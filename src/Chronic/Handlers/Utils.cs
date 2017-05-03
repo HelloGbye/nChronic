@@ -36,6 +36,17 @@ namespace Chronic.Handlers
             return span;
         }
 
+        /// <summary>
+        /// modifies input to be within restrictionSpan
+        /// </summary>
+        public static void RestrictSpan(Span input, Span restrictionSpan)
+        {
+            if (input.Start < restrictionSpan.Start)
+                input.Start = restrictionSpan.Start;
+            if (input.End > restrictionSpan.End)
+                input.End = restrictionSpan.End;
+        }
+
         public static Span HandleGRR(IList<Token> tokens, Span outerSpan)
         {
             var grabber = tokens[0].GetTag<Grabber>().Value;
