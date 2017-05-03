@@ -20,6 +20,12 @@ namespace Chronic.Tests
             Assert.Equal(expected, @this.Start);
         }
 
+        public static void AssertEndsAt(this Span @this, DateTime expected)
+        {
+            Assert.NotNull(@this);
+            Assert.Equal(expected, @this.End);
+        }
+
         public static void StartingAt(this Span @this, DateTime expected)
         {
             Assert.NotNull(@this);

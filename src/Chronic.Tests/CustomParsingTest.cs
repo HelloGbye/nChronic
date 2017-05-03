@@ -66,6 +66,76 @@ namespace Chronic.Tests
                 .AssertEquals(Time.New(2006, 8, 02, 14));
         }
 
+
+        public class WeekXinMonth : ParsingTestsBase
+        {
+            protected override DateTime Now()
+            {
+                return Time.New(2017, 05, 03, 14, 34, 13);
+            }
+
+            [Fact]
+            public void first_week_january_is_parsed_correctly()
+            {
+                Parse("first week january").AssertStartsAt(Time.New(2018, 1, 1));
+                Parse("first week january")  .AssertEndsAt(Time.New(2018, 1, 7));
+            }
+            [Fact]
+            public void secondWord_week_january_is_parsed_correctly()
+            {
+                Parse("second week january").AssertStartsAt(Time.New(2018, 1, 7));
+                Parse("second week january")  .AssertEndsAt(Time.New(2018, 1, 14));
+                Parse("2nd week january").AssertStartsAt(Time.New(2018, 1, 7));
+                Parse("2nd week january")  .AssertEndsAt(Time.New(2018, 1, 14));
+            }
+            [Fact]
+            public void week3_january_is_parsed_correctly()
+            {
+                Parse("third week january").AssertStartsAt(Time.New(2018, 1, 14));
+                Parse("third week january")  .AssertEndsAt(Time.New(2018, 1, 21));
+            }
+            [Fact]
+            public void week4_january_is_parsed_correctly()
+            {
+                Parse("fourth week january").AssertStartsAt(Time.New(2018, 1, 21));
+                Parse("fourth week january")  .AssertEndsAt(Time.New(2018, 1, 28));
+            }
+            [Fact]
+            public void lastWeek_january_is_parsed_correctly()
+            {
+                Parse("last week january").AssertStartsAt(Time.New(2018, 1, 28));
+                Parse("last week january")  .AssertEndsAt(Time.New(2018, 2, 1));
+            }
+            [Fact]
+            public void lastWeek_inJanuary_is_parsed_correctly()
+            {
+                Parse("last week in january").AssertStartsAt(Time.New(2018, 1, 28));
+                Parse("last week in january")  .AssertEndsAt(Time.New(2018, 2, 1));
+            }
+
+            // TODO: PRS-544
+            //[Fact]
+            //public void o_r_s_r()
+            //{
+            //    var xxxxxxx = Parse("last wednesday in november");
+            //    //Parse("last wednesday in november").AssertIsNull(); // <-------- wrong!!
+            //}
+        }
+
+        public class OverflowTests : ParsingTestsBase
+        {
+            protected override DateTime Now()
+            {
+                return Time.New(2016, 3, 9, 14, 34, 13);
+            }
+
+            [Fact]
+            public void day4_last_week_shouldBe_from_sunday()
+            {
+                Parse("4th day last week").AssertEquals(Time.New(2016, 3, 2, 12));
+            }
+        }
+
         public class CanExtractTimeSpanFromSpan : ParsingTestsBase
         {
             protected override DateTime Now()
@@ -163,17 +233,20 @@ namespace Chronic.Tests
             [Fact]
             public void last_week_of_month_test()
             {
-                Parse("last week in january").AssertEquals(Time.New(2007, 1, 31, 12));
+                Parse("last week in january").AssertStartsAt(Time.New(2007, 1, 28));
+                Parse("last week in january").  AssertEndsAt(Time.New(2007, 2, 1));
             }
             [Fact]
             public void last_week_of_month_test2()
             {
-                Parse("last week january").AssertEquals(Time.New(2007, 1, 31, 12));
+                Parse("last week january").AssertStartsAt(Time.New(2007, 1, 28));
+                Parse("last week january").AssertEndsAt(Time.New(2007, 2, 1));
             }
             [Fact]
             public void last_week_of_month_test3()
             {
-                Parse("last week of january").AssertEquals(Time.New(2007, 1, 31, 12));
+                Parse("last week of january").AssertStartsAt(Time.New(2007, 1, 28));
+                Parse("last week of january").AssertEndsAt(Time.New(2007, 2, 1));
             }
         }
 
