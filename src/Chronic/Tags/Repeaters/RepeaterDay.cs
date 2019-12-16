@@ -56,10 +56,10 @@ namespace Chronic.Tags.Repeaters
         }
 
 
-        public override Span GetOffset(Span span, int amount, Pointer.Type pointer)
+        public override Span GetOffset(Span span, decimal amount, Pointer.Type pointer)
         {
             var direction = (int)pointer;
-            return span.Add(direction * amount * RepeaterDay.DAY_SECONDS);
+            return span.Add((long)(direction * amount * RepeaterDay.DAY_SECONDS));
         }
 
         public override int GetWidth()

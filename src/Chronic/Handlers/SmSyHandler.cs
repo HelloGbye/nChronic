@@ -8,7 +8,7 @@ namespace Chronic.Handlers
         public Span Handle(IList<Token> tokens, Options options)
         {
             var month = (int)tokens[0].GetTag<ScalarMonth>().Value;
-            var year = tokens[1].GetTag<ScalarYear>().Value;
+            var year = (int)tokens[1].GetTag<ScalarYear>().Value;
 
             try
             {

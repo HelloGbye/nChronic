@@ -16,7 +16,7 @@ namespace Chronic.Handlers
             else
                 repeater.Now = outerSpan.Start.Value.AddSeconds(-1);
 
-			int ordinal = 1;
+			var ordinal = 1.0m;
 			if (tokens[0].GetTag<Ordinal>() != null)
 				ordinal= tokens[0].GetTag<Ordinal>().Value;
 			else

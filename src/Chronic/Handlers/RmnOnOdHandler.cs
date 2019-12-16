@@ -11,7 +11,7 @@ namespace Chronic.Handlers
         public Span Handle(IList<Token> tokens, Options options)
         {
             var month = tokens[0].GetTag<RepeaterMonthName>();
-            var day = tokens[1].GetTag<ScalarDay>().Value;
+            var day = (int)tokens[1].GetTag<ScalarDay>().Value;
             var now = options.Clock();
 
             if (Time.IsMonthOverflow(now.Year, (int)month.Value, day))

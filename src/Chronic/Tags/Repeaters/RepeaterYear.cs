@@ -71,7 +71,7 @@ namespace Chronic.Tags.Repeaters
         }
 
 
-        public override Span GetOffset(Span span, int amount, Pointer.Type pointer)
+        public override Span GetOffset(Span span, decimal amount, Pointer.Type pointer)
         {
             var direction = (int)pointer;
             var newBegin = BuildOffsetTime(span.Start.Value, amount, direction);
@@ -79,12 +79,12 @@ namespace Chronic.Tags.Repeaters
             return new Span(newBegin, newEnd);
         }
 
-        private DateTime BuildOffsetTime(DateTime time, int amount, int direction)
+        private DateTime BuildOffsetTime(DateTime time, decimal amount, int direction)
         {
             var year = time.Year + (amount * direction);
-            var days = Time.DaysInMonth(year, time.Month);
+            var days = Time.DaysInMonth((int)year, time.Month);
             var day = time.Day > days ? days : time.Day;
-            return Time.New(year, time.Month, day, time.Hour, time.Minute,
+            return Time.New((int)year, time.Month, day, time.Hour, time.Minute,
                             time.Second);
         }
 

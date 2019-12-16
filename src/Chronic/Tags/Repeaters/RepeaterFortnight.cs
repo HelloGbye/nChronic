@@ -24,7 +24,7 @@ namespace Chronic.Tags.Repeaters
             throw new System.NotImplementedException();
         }
 
-        public override Span GetOffset(Span span, int amount, Pointer.Type pointer)
+        public override Span GetOffset(Span span, decimal amount, Pointer.Type pointer)
         {
             throw new System.NotImplementedException();
         }

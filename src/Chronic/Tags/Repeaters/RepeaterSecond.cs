@@ -36,12 +36,12 @@ namespace Chronic.Tags.Repeaters
             return new Span(now, now.AddSeconds(1));
         }
 
-        public override Span GetOffset(Span span, int amount,
+        public override Span GetOffset(Span span, decimal amount,
                                        Pointer.Type pointer)
         {
             int direction = (pointer == Pointer.Type.Future) ? 1 : -1;
             // WARN: Does not use Calendar
-            return span.Add(direction * amount * RepeaterSecond.SECOND_SECONDS);
+            return span.Add((long)(direction * amount * RepeaterSecond.SECOND_SECONDS));
         }
 
         public override int GetWidth()

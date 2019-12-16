@@ -12,13 +12,13 @@ namespace Chronic.Handlers
             var day = tokens[2].GetTag<ScalarDay>().Value;
             var year = options.Clock().Year;
 
-            if (Time.IsMonthOverflow(year, (int) month.Value, day))
+            if (Time.IsMonthOverflow((int)year, (int) month.Value, (int)day))
             {
                 return null;
             }
             try
             {
-                var start = Time.New(year, (int) month.Value, day);
+                var start = Time.New((int)year, (int) month.Value, (int)day);
                 var end = start.AddDays(1);
                 return new Span(start, end);
             }

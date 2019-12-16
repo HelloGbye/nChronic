@@ -128,7 +128,7 @@ namespace Chronic.Tags.Repeaters
             return span;
         }
 
-        public override Span GetOffset(Span span, int amount, Pointer.Type pointer)
+        public override Span GetOffset(Span span, decimal amount, Pointer.Type pointer)
         {
             throw new IllegalStateException("Not implemented.");
         }

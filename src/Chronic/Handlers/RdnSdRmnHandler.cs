@@ -9,7 +9,7 @@ namespace Chronic.Handlers
 		public Span Handle(IList<Token> tokens, Options options)
 		{
 			var month = tokens[2].GetTag<RepeaterMonthName>();
-			var day = tokens[1].GetTag<ScalarDay>().Value;
+			var day = (int)tokens[1].GetTag<ScalarDay>().Value;
 			var year = options.Clock().Year;
 
 			if (Time.IsMonthOverflow(year, (int)month.Value, day))

@@ -9,9 +9,9 @@ namespace Chronic.Handlers
     {
         public Span Handle(IList<Token> tokens, Options options)
         {
-            var month = tokens[1].GetTag<ScalarMonth>().Value;
-            var day = tokens[0].GetTag<ScalarDay>().Value;
-            var year = tokens[2].GetTag<ScalarYear>().Value;
+            var month =(int) tokens[1].GetTag<ScalarMonth>().Value;
+            var day = (int)tokens[0].GetTag<ScalarDay>().Value;
+            var year = (int)tokens[2].GetTag<ScalarYear>().Value;
             var timeTokens = tokens.Skip(3).ToList();
 
             if (Time.IsMonthOverflow(year, month, day))

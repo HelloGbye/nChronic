@@ -67,15 +67,24 @@ namespace Chronic.Tags.Repeaters
             }
             return new Span(monthStart, monthEnd);
         }
+		public static DateTime AddMonthsWithFraction(DateTime date, decimal amount)
+		{
+			var day_excess = amount - (int)amount;
+			date = date.AddMonths((int)amount);
 
-        public override Span GetOffset(Span span, int amount, Pointer.Type pointer)
+			date = date.AddDays((double)(Time.DaysInMonth(date.Year, date.Month) * day_excess));
+			return date;
+		}
+
+        public override Span GetOffset(Span span, decimal amount, Pointer.Type pointer)
         {
             int direction = (pointer == Pointer.Type.Future) ? 1 : -1;
-            return new Span(
-                span.Start.Value.AddMonths(amount * direction),
-                span.End.Value.AddMonths(amount * direction)
-            );
+			amount *= direction;
 
+			return  new Span(
+				AddMonthsWithFraction(span.Start.Value,amount),
+				AddMonthsWithFraction(span.End.Value, amount)
+            );
         }
 
 

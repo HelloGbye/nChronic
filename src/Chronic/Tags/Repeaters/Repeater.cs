@@ -37,7 +37,7 @@ namespace Chronic.Tags.Repeaters
 
         protected abstract Span CurrentSpan(Pointer.Type pointer);
 
-        public abstract Span GetOffset(Span span, int amount, Pointer.Type pointer);
+        public abstract Span GetOffset(Span span, decimal amount, Pointer.Type pointer);
 
         public override string ToString()
         {

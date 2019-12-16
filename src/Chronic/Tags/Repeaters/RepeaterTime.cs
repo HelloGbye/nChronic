@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Chronic;
 
 namespace Chronic.Tags.Repeaters
@@ -8,22 +9,35 @@ namespace Chronic.Tags.Repeaters
     {
         DateTime? _currentTime;
         const int SecondsInHour = 60 * 60;
+		private Regex decimal_ok= new Regex(@"(.+)([.]\d+)$");
+		public static bool OLD_TIME_DECIMAL_BEHAVIOR = false;
 
         public RepeaterTime(string value)
             : base(null)
         {
+			decimal to_add = 0;
+			if (value.Contains(".")) {
+				if (!OLD_TIME_DECIMAL_BEHAVIOR) {
+					var match = decimal_ok.Match(value);
+					if (!match.Success)
+						throw new ArgumentException("time format can only have decimal at end");
+					value = match.Groups[1].Value;
+					to_add = decimal.Parse("0" + match.Groups[2].Value);
+				} else
+					value = value.Replace(".", "");
+			}
             var t = value.Replace(":", "");
             Tick tick;
-            if (t.Length <= 2)
+            if (t.Length <= 2 || t.Contains("."))
             {
-                var hours = int.Parse(t);
-                tick = new Tick((hours == 12 ? 0 : hours) * SecondsInHour, true);
+                var hours = decimal.Parse(t) + to_add;
+                tick = new Tick((int)((hours == 12 ? 0 : hours) * SecondsInHour), true);
             }
             else if (t.Length == 3)
             {
                 int hoursInSeconds = int.Parse(t.Substring(0, 1)) * SecondsInHour;
-                int minutesInSeconds = int.Parse(t.Substring(1)) * 60;
-                tick = new Tick(hoursInSeconds + minutesInSeconds, true);
+                var minutesInSeconds = (int.Parse(t.Substring(1))+ to_add) * 60;
+                tick = new Tick((int)(hoursInSeconds + minutesInSeconds), true);
             }
             else if (t.Length == 4)
             {
@@ -32,22 +46,22 @@ namespace Chronic.Tags.Repeaters
                                         int.Parse(t.Substring(0, 2)) <= 12);
                 int hours = int.Parse(t.Substring(0, 2));
                 int hoursInSeconds = hours * 60 * 60;
-                int minutesInSeconds = int.Parse(t.Substring(2)) * 60;
+                var minutesInSeconds = (int.Parse(t.Substring(2))+ to_add) * 60;
                 if (hours == 12)
                 {
-                    tick = new Tick(0 * 60 * 60 + minutesInSeconds, ambiguous);
+                    tick = new Tick((int)(0 * 60 * 60 + minutesInSeconds), ambiguous);
                 }
                 else
                 {
-                    tick = new Tick(hoursInSeconds + minutesInSeconds, ambiguous);
+                    tick = new Tick((int)(hoursInSeconds + minutesInSeconds), ambiguous);
                 }
             }
             else if (t.Length == 5)
             {
                 int hoursInSeconds = int.Parse(t.Substring(0, 1)) * 60 * 60;
                 int minutesInSeconds = int.Parse(t.Substring(1, 2)) * 60;
-                int seconds = int.Parse(t.Substring(3));
-                tick = new Tick(hoursInSeconds + minutesInSeconds + seconds,
+                var seconds = int.Parse(t.Substring(3)) + to_add;
+                tick = new Tick((int)(hoursInSeconds + minutesInSeconds + seconds),
                                 true);
             }
             else if (t.Length == 6)
@@ -58,17 +72,17 @@ namespace Chronic.Tags.Repeaters
                 int hours = int.Parse(t.Substring(0, 2));
                 int hoursInSeconds = hours * 60 * 60;
                 int minutesInSeconds = int.Parse(t.Substring(2, 2)) * 60;
-                int seconds = int.Parse(t.Substring(4, 2));
+                var seconds = int.Parse(t.Substring(4, 2))+ to_add;
                 //type = new Tick(hoursInSeconds + minutesInSeconds + seconds, ambiguous);
                 if (hours == 12)
                 {
-                    tick = new Tick(0 * 60 * 60 + minutesInSeconds + seconds,
+                    tick = new Tick((int)(0 * 60 * 60 + minutesInSeconds + seconds),
                                     ambiguous);
                 }
                 else
                 {
                     tick = new Tick(
-                        hoursInSeconds + minutesInSeconds + seconds, ambiguous);
+                        (int)(hoursInSeconds + minutesInSeconds + seconds), ambiguous);
                 }
             }
             else
@@ -190,7 +204,7 @@ namespace Chronic.Tags.Repeaters
             return NextSpan(pointer);
         }
 
-        public override Span GetOffset(Span span, int amount,
+        public override Span GetOffset(Span span, decimal amount,
                                        Pointer.Type pointer)
         {
             throw new NotImplementedException();

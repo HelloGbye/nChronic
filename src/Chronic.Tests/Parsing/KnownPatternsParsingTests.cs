@@ -43,8 +43,8 @@ namespace Chronic.Tests.Parsing
             Parse("may 28 at 5pm", new { Context = Pointer.Type.Past })
                 .AssertEquals(Time.New(2006, 5, 28, 17));
 
-            Parse("may 28 at 5:32.19pm", new { Context = Pointer.Type.Past })
-                .AssertEquals(Time.New(2006, 5, 28, 17, 32, 19));
+            Parse("may 28 at 5:32.5pm", new { Context = Pointer.Type.Past })
+                .AssertEquals(Time.New(2006, 5, 28, 17, 32, 30));
         }
 
         [Fact]
@@ -309,7 +309,7 @@ namespace Chronic.Tests.Parsing
                 .AssertEquals(Time.New(2006, 8, 20, 15, 30, 30));
 
             Parse("2006-08-20 15:30.30")
-                .AssertEquals(Time.New(2006, 8, 20, 15, 30, 30));
+                .AssertEquals(Time.New(2006, 8, 20, 15, 30, 18));
 
             Parse("1902-08-20")
                 .AssertEquals(Time.New(1902, 8, 20, 12, 0, 0));

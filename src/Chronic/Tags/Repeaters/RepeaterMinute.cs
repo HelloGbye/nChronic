@@ -76,10 +76,10 @@ namespace Chronic.Tags.Repeaters
             return new Span(minuteBegin, minuteEnd);
         }
 
-        public override Span GetOffset(Span span, int amount, Pointer.Type pointer)
+        public override Span GetOffset(Span span, decimal amount, Pointer.Type pointer)
         {
             int direction = (pointer == Pointer.Type.Future) ? 1 : -1;
-            return span.Add(direction * amount * RepeaterMinute.MINUTE_SECONDS);
+            return span.Add((long)(direction * amount * RepeaterMinute.MINUTE_SECONDS));
         }
 
         public override string ToString()

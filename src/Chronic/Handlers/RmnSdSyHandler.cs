@@ -19,7 +19,7 @@ namespace Chronic.Handlers
             try
             {
                 var timeTokens = tokens.Skip(3).ToList();
-                var dayStart = Time.New(year, month, day);
+                var dayStart = Time.New((int)year, month, (int)day);
                 span = Utils.DayOrTime(dayStart, timeTokens, options);
             }
             catch (ArgumentException)

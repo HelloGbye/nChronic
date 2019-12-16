@@ -27,7 +27,7 @@ namespace Chronic
 
         Span GetNextSpan(Pointer.Type pointer);
         Span GetCurrentSpan(Pointer.Type pointer);
-        Span GetOffset(Span span, int amount, Pointer.Type pointer);
+        Span GetOffset(Span span, decimal amount, Pointer.Type pointer);
     }
 
     public interface ITag

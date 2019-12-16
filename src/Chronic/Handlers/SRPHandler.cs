@@ -13,7 +13,7 @@ namespace Chronic.Handlers
 
         public Span Handle(IList<Token> tokens, Span span, Options options)
         {
-            int distance = 1;
+            decimal distance = 1;
             int index = 0;
 
             if (tokens[0].GetTag<Scalar>() != null)

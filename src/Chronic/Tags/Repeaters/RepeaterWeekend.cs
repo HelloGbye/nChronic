@@ -80,7 +80,7 @@ namespace Chronic.Tags.Repeaters
 
         }
 
-        public override Span GetOffset(Span span, int amount, Pointer.Type pointer)
+        public override Span GetOffset(Span span, decimal amount, Pointer.Type pointer)
         {
             var direction = (pointer == Pointer.Type.Future) ? 1 : -1;
             var weekend = new RepeaterWeekend();
@@ -88,7 +88,7 @@ namespace Chronic.Tags.Repeaters
             var start = weekend
                 .GetNextSpan(pointer)
                 .Start.Value
-                .AddSeconds((amount - 1) * direction * RepeaterWeek.WEEK_SECONDS);
+                .AddSeconds((double)((amount - 1) * direction * RepeaterWeek.WEEK_SECONDS));
 
             return new Span(start, start.AddSeconds(span.Width));
 

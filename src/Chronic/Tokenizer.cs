@@ -49,7 +49,7 @@ namespace Chronic
             normalized = normalized
                 .ReplaceAll(@"\s+", " ")
                 .ReplaceAll(@"([/\-,@])", " " + "$1" + " ")
-                .ReplaceAll(@"['""\.,]", "")
+                .ReplaceAll(@"['"",]", "")
                 //.ReplaceAll(@"\bsecond (of|day|month|hour|minute|second)\b", "2nd $1")
                 .ReplaceAll(@"\b(1|one) second\b", "1 sec")
                 .ReplaceAll(@"\bthis second\b", "this sec")

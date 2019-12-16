@@ -10,7 +10,7 @@ namespace Chronic.Handlers
         {
             if (tokens.Count == 1 && tokens[0].IsTaggedAs<ScalarDay>())
             {
-                var day = tokens[0].GetTag<ScalarDay>().Value;
+                var day = (int)tokens[0].GetTag<ScalarDay>().Value;
                 if (Time.IsMonthOverflow(options.Clock().Year, options.Clock().Month, day))
                 {
                     return null;

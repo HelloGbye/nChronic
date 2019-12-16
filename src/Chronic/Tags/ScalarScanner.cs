@@ -8,16 +8,16 @@ namespace Chronic
     public class ScalarScanner : ITokenScanner
     {
         static readonly Regex _pattern = new Regex(
-            @"^\d*$",
+			@"^\d*([.]\d+)?$",
             RegexOptions.Singleline | RegexOptions.Compiled);
 
         static readonly Regex _dayPattern = new Regex(
-            @"^\d\d?$",
+            @"^\d\d?([.]\d+)?$",
             RegexOptions.Singleline | RegexOptions.Compiled);
 
         static readonly Regex _monthPattern = _dayPattern;
         static readonly Regex _yearPattern = new Regex(
-            @"^([1-9]\d)?\d\d?$",
+			@"^([1-9]\d)?\d\d?([.]\d+)?$",
             RegexOptions.Singleline | RegexOptions.Compiled);
 
         static readonly string[] _dayPeriods = new string[] { "am", "pm", "morning", "afternoon", "evening", "night" };
@@ -44,7 +44,7 @@ namespace Chronic
             if (match.Success && String.IsNullOrEmpty(token.Value) == false
                 && TokenIsAPeriodOfDay(nextToken) == false)
             {
-                return new Scalar(int.Parse(match.Groups[0].Value));
+                return new Scalar(decimal.Parse(match.Groups[0].Value));
             }
             return null;
         }
@@ -53,7 +53,7 @@ namespace Chronic
         {
             if (_dayPattern.IsMatch(token.Value))
             {
-                var value = int.Parse(token.Value);
+                var value = decimal.Parse(token.Value);
                 if (value <= 31 && TokenIsAPeriodOfDay(nextToken) == false)
                     return new ScalarDay(value);
             }
@@ -64,7 +64,7 @@ namespace Chronic
         {
             if (_monthPattern.IsMatch(token.Value))
             {
-                var value = int.Parse(token.Value);
+                var value = decimal.Parse(token.Value);
                 if (value <= 12 && TokenIsAPeriodOfDay(nextToken) == false)
                     return new ScalarMonth(value);
             }
@@ -75,7 +75,7 @@ namespace Chronic
         {
             if (_yearPattern.IsMatch(token.Value))
             {
-                var value = int.Parse(token.Value);
+                var value = decimal.Parse(token.Value);
                 if (TokenIsAPeriodOfDay(nextToken) == false)
                 {
                     if (value <= 37)

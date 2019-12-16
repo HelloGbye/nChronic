@@ -110,10 +110,10 @@ namespace Chronic.Tags.Repeaters
 
         }
 
-        public override Span GetOffset(Span span, int amount, Pointer.Type pointer)
+        public override Span GetOffset(Span span, decimal amount, Pointer.Type pointer)
         {
             var direction = (pointer == Pointer.Type.Future) ? 1 : -1;
-            return span.Add(direction * amount * RepeaterWeek.WEEK_SECONDS);
+            return span.Add((long)(direction * amount * RepeaterWeek.WEEK_SECONDS));
         }
 
         public override string ToString()

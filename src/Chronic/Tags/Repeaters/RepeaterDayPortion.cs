@@ -105,12 +105,12 @@ namespace Chronic.Tags.Repeaters
         }
 
 
-        public override Span GetOffset(Span span, int amount, Pointer.Type pointer)
+        public override Span GetOffset(Span span, decimal amount, Pointer.Type pointer)
         {
             Now = span.Start;
             var portionSpan = NextSpan(pointer);
             var direction = (pointer == Pointer.Type.Future) ? 1 : -1;
-            portionSpan = portionSpan.Add(direction * (amount - 1) * RepeaterDay.DAY_SECONDS);
+            portionSpan = portionSpan.Add((long)(direction * (amount - 1) * RepeaterDay.DAY_SECONDS));
             return portionSpan;
         }
 

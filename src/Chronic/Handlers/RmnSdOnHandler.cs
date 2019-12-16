@@ -15,13 +15,13 @@ namespace Chronic.Handlers
             if (tokens.Count > 3)
             {
                 month = tokens[2].GetTag<RepeaterMonthName>();
-                day = tokens[3].GetTag<ScalarDay>().Value;
+                day = (int)tokens[3].GetTag<ScalarDay>().Value;
                 remainingTokens = tokens.Take(2).ToList();
             }
             else
             {
                 month = tokens[1].GetTag<RepeaterMonthName>();
-                day = tokens[2].GetTag<ScalarDay>().Value;
+                day = (int)tokens[2].GetTag<ScalarDay>().Value;
                 remainingTokens = tokens.Take(1).ToList();                
             }
 

@@ -13,14 +13,14 @@ namespace Chronic.Handlers
             var month = (int) tokens[1].GetTag<RepeaterMonthName>().Value;
             var year = tokens[2].GetTag<ScalarYear>().Value;
             var timeTokens = tokens.Skip(3).ToList();
-            if (Time.IsMonthOverflow(year, month, day))
+            if (Time.IsMonthOverflow((int)year, month, day))
             {
                 return null;
             }
 
             try
             {
-                var dayStart = Time.New(year, month, day);
+                var dayStart = Time.New((int)year, month, day);
                 return Utils.DayOrTime(dayStart, timeTokens, options);
             }
             catch (ArgumentException)

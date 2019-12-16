@@ -2,9 +2,9 @@ using System.Collections.Generic;
 
 namespace Chronic
 {
-    public class Scalar : Tag<int>
+    public class Scalar : Tag<decimal>
     {
-        public Scalar(int value)
+        public Scalar(decimal value)
             : base(value)
         {
         }
@@ -17,7 +17,7 @@ namespace Chronic
 
     public class ScalarDay : Scalar
     {
-        public ScalarDay(int value)
+        public ScalarDay(decimal value)
             : base(value)
         {
         }
@@ -30,7 +30,7 @@ namespace Chronic
 
     public class ScalarMonth : Scalar
     {
-        public ScalarMonth(int value)
+        public ScalarMonth(decimal value)
             : base(value)
         {
         }
@@ -43,7 +43,7 @@ namespace Chronic
 
     public class ScalarYear : Scalar
     {
-        public ScalarYear(int value)
+        public ScalarYear(decimal value)
             : base(value)
         {
         }

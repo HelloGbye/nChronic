@@ -124,7 +124,7 @@ namespace Chronic.Tags.Repeaters
         }
 
         static readonly Regex _timePattern =
-            @"^\d{1,2}(:?\d{2})?([\.:]?\d{2})?$".Compile();
+            @"^\d{1,2}(:?\d{2})?([\.:]?\d{1,2})?$".Compile();
 
         static readonly List<dynamic> DayPortionPatterns = new List<dynamic>
             {
